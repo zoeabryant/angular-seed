@@ -1,5 +1,11 @@
 <p>This is the partial for view 2.</p>
 
+<ul>
+  <li class="checkbox" ng-repeat="name in names">
+    {{ name }}
+  </li>
+</ul>
+
 <p>
   Showing of 'interpolate' filter:
   {{ 'Current version is v%VERSION%.' | interpolate }}

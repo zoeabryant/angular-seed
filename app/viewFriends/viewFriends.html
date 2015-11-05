@@ -1,0 +1,12 @@
+<p>This is the partial for viewFriends.</p>
+
+<ul>
+  <li class="checkbox" ng-repeat="name in names">
+    {{ name }}
+  </li>
+</ul>
+
+<p>
+  Name: <input type="text" ng-model="formData.text">
+  <button ng-click="addName()">Add a friend</button>
+</p>

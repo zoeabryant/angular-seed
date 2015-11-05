@@ -1,0 +1,16 @@
+<p>This is the partial for login</p>
+
+<p>
+  <lable for="username">Username</lable>
+  <input type="username" ng-model="loginForm.username" />
+</p>
+
+<p ng-if="nameNotFound">
+ Your name, it's not found
+</p>
+
+<p>
+  <lable for="password">Password</lable>
+  <input type="password" ng-model="loginForm.password" />
+</p>
+<button ng-click="login()">Login</button>
