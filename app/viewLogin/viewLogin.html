@@ -2,14 +2,16 @@
 
 <p ng-if="error">{{ error }}</p>
 
-<p>
-  <lable for="username">Username</lable>
-  <input type="username" ng-model="loginForm.username" />
-</p>
+<form ng-submit="login()">
+  <p>
+    <lable for="username">Username</lable>
+    <input type="username" ng-model="loginForm.username" />
+  </p>
 
-<p>
-  <lable for="password">Password</lable>
-  <input type="password" ng-model="loginForm.password" />
-</p>
+  <p>
+    <lable for="password">Password</lable>
+    <input type="password" ng-model="loginForm.password" />
+  </p>
 
-<button ng-click="login()">Login</button>
+  <button type="submit">Login</button>
+</form>

@@ -43,11 +43,11 @@ angular.module('myApp', [
         password: password
       }
     }).then(function successCallback(response) {
-      console.log('omg it worked');
+      console.log('login successful');
       SessionService.loggedIn = true;
       success(response);
     }, function errorCallback(response) {
-      console.log('omg it didnt work');
+      console.log('login failed');
       SessionService.loggedIn = false;
       error(response);
     });
