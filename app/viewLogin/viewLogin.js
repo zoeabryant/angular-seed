@@ -12,12 +12,10 @@ angular.module('myApp.viewLogin', ['ngRoute'])
 .controller('ViewLoginCtrl', ['$scope', '$location', 'LoginService', function($scope, $location, LoginService) {
 
   var successCallback = function(response) {
-    console.log('omg it worked');
     $location.path('/friends').replace();
   }
 
   var errorCallback = function(response) {
-    console.log('omg it didnt work');
     switch(response.status){
       case 404:
         $scope.error = ('Your login details could not be found - are you registered?');

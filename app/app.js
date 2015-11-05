@@ -14,6 +14,16 @@ angular.module('myApp', [
   $routeProvider.otherwise({redirectTo: '/login'});
 }])
 
+.service('SessionService', ['$location', function($location){
+  this.loggedIn = false;
+
+  this.kickOutIfNotLoggedIn = function(){
+    if(!this.loggedIn){
+      $location.path('/login').replace();
+    }
+  }
+}])
+
 .service('NameService', function(){
   this.names = ['Julie', 'Jennifer', 'Janice'];
 
@@ -22,7 +32,7 @@ angular.module('myApp', [
   };
 })
 
-.service('LoginService', ['$http', '$httpParamSerializerJQLike', function($http, $httpParamSerializerJQLike){
+.service('LoginService', ['$http', '$httpParamSerializerJQLike', 'SessionService', function($http, $httpParamSerializerJQLike, SessionService){
   this.login = function(username, password, success, error){
 
     $http({
@@ -33,8 +43,12 @@ angular.module('myApp', [
         password: password
       }
     }).then(function successCallback(response) {
+      console.log('omg it worked');
+      SessionService.loggedIn = true;
       success(response);
     }, function errorCallback(response) {
+      console.log('omg it didnt work');
+      SessionService.loggedIn = false;
       error(response);
     });
 
