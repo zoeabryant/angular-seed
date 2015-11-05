@@ -9,6 +9,12 @@ angular.module('myApp.view1', ['ngRoute'])
   });
 }])
 
-.controller('View1Ctrl', [function() {
+.controller('View1Ctrl', ['$scope', 'NameService',  function($scope, NameService) {
+
+  $scope.names = NameService.names;
+
+  $scope.addName = function(){
+    NameService.addName($scope.formData.text);
+  };
 
 }]);
