@@ -30,7 +30,6 @@ angular.module('myApp.viewFriends', ['ngRoute'])
   };
 
   $scope.deleteFriend = function(id){
-    console.log('deleteFriend clicked');
     FriendService.deleteFriend(id, loadData, genericErrorCallback);
   };
 

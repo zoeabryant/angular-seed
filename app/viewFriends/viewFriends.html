@@ -1,4 +1,9 @@
-<p>This is the partial for viewFriends.</p>
+<h2>Your friends</h2>
+
+<form ng-submit="addFriend()">
+  Name: <input type="text" ng-model="addFriendForm.name">
+  <button type="submit">Add {{addFriendForm.name}} to your friends</button>
+</form>
 
 <ul ng-if="friends">
   <li ng-repeat="friend in friends">
@@ -6,8 +11,3 @@
     <u ng-click="deleteFriend(friend.id)">x</u>
   </li>
 </ul>
-
-<p>
-  Name: <input type="text" ng-model="addFriendForm.name">
-  <button ng-click="addFriend()">Add a friend</button>
-</p>
