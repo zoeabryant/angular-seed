@@ -1,7 +1,7 @@
 <p>This is the partial for viewFriends.</p>
 
-<ul>
-  <li class="checkbox" ng-repeat="name in names">
+<ul ng-if="names">
+  <li ng-repeat="name in names">
     {{ name }}
   </li>
 </ul>

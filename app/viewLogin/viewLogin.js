@@ -9,11 +9,28 @@ angular.module('myApp.viewLogin', ['ngRoute'])
   });
 }])
 
-.controller('ViewLoginCtrl', ['$scope', 'LoginService',  function($scope, LoginService) {
+.controller('ViewLoginCtrl', ['$scope', '$location', 'LoginService', function($scope, $location, LoginService) {
 
-  $scope.nameNotFound = false;
+  var successCallback = function(response) {
+    console.log('omg it worked');
+    $location.path('/friends').replace();
+  }
+
+  var errorCallback = function(response) {
+    console.log('omg it didnt work');
+    switch(response.status){
+      case 404:
+        $scope.error = ('Your login details could not be found - are you registered?');
+        break;
+      case 401:
+        $scope.error = ('Your login details appear not to be correct - please try again');
+        break;
+      default:
+        $scope.error = ('Something has gone wrong, please try again later');
+    }
+  }
 
   $scope.login = function(){
-    LoginService.login($scope.loginForm.username, $scope.loginForm.password);
+    LoginService.login($scope.loginForm.username, $scope.loginForm.password, successCallback, errorCallback);
   };
 }]);

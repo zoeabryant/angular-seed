@@ -22,26 +22,20 @@ angular.module('myApp', [
   };
 })
 
-.service('LoginService', ['$http', '$httpParamSerializerJQLike', '$location', function($http, $httpParamSerializerJQLike, $location){
-  this.login = function(username, password){
+.service('LoginService', ['$http', '$httpParamSerializerJQLike', function($http, $httpParamSerializerJQLike){
+  this.login = function(username, password, success, error){
 
     $http({
       method: 'POST',
       url: 'http://localhost:8080/login',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      data: $httpParamSerializerJQLike({
+      data: {
         username: username,
         password: password
-      })
+      }
     }).then(function successCallback(response) {
-      console.log('omg it worked');
-      $location.path('/friends').replace();
-      return response.code;
+      success(response);
     }, function errorCallback(response) {
-      console.log('omg it didnt work');
-      return response.code;
+      error(response);
     });
 
   };
