@@ -53,4 +53,56 @@ angular.module('myApp', [
     });
 
   };
+}])
+
+.service('FriendService', ['$http', '$httpParamSerializerJQLike', function($http, $httpParamSerializerJQLike){
+
+  this.getFriends = function(success, error){
+
+    $http({
+      method: 'GET',
+      url: 'http://localhost:8910/person'
+    }).then(function successCallback(response) {
+      console.log('get friends successful');
+      success(response);
+    }, function errorCallback(response) {
+      console.log('get friends failed');
+      error(response);
+    });
+
+  };
+
+  this.addFriend = function(name, success, error){
+
+    $http({
+      method: 'POST',
+      url: 'http://localhost:8910/person',
+      data: {
+        name: name
+      }
+    }).then(function successCallback(response) {
+      console.log('add friend successful');
+      success(response);
+    }, function errorCallback(response) {
+      console.log('add friend failed');
+      error(response);
+    });
+
+  };
+
+  this.deleteFriend = function(id, success, error){
+
+    $http({
+      method: 'DELETE',
+      url: 'http://localhost:8910/person/' + id
+    }).then(function successCallback(response) {
+      console.log('delete friend successful');
+      success(response);
+    }, function errorCallback(response) {
+      console.log('delete friend failed');
+      error(response);
+    });
+
+  };
+
 }]);

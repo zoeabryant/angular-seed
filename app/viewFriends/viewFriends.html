@@ -1,12 +1,13 @@
 <p>This is the partial for viewFriends.</p>
 
-<ul ng-if="names">
-  <li ng-repeat="name in names">
-    {{ name }}
+<ul ng-if="friends">
+  <li ng-repeat="friend in friends">
+    {{ friend.name }}
+    <u ng-click="deleteFriend(friend.id)">x</u>
   </li>
 </ul>
 
 <p>
-  Name: <input type="text" ng-model="formData.text">
-  <button ng-click="addName()">Add a friend</button>
+  Name: <input type="text" ng-model="addFriendForm.name">
+  <button ng-click="addFriend()">Add a friend</button>
 </p>
