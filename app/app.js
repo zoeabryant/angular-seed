@@ -55,7 +55,7 @@ angular.module('myApp', [
   };
 }])
 
-.service('FriendService', ['$http', function($http){
+.service('FriendService', ['$http', '$q', function($http, $q){
 
   this.getFriends = function(success, error){
 
@@ -73,8 +73,7 @@ angular.module('myApp', [
   };
 
   this.addFriend = function(name, success, error){
-
-    $http({
+    return $http({
       method: 'POST',
       url: 'http://localhost:8910/person',
       data: {
@@ -94,7 +93,7 @@ angular.module('myApp', [
 
   this.deleteFriend = function(friend, success, error){
     var service = this;
-    $http({
+    return $http({
       method: 'DELETE',
       url: 'http://localhost:8910/person/' + friend.id
     }).then(function successCallback(response) {
@@ -110,23 +109,80 @@ angular.module('myApp', [
 
   this.deleteAllFriends = function(friends, success, error){
     var service = this;
-    console.log('deleteAllFriends');
-    friends.forEach(function(friend){
-      service.deleteFriend(friend, success, error);
-    });
+
+    var setupDeletePromises = function(){
+      var promises = []
+
+      friends.forEach(function(friend){
+        promises.push(service.deleteFriend(friend, function(r){}, error));
+      });
+
+      return promises
+    }
+
+    var resolveDeletePromises = function(promises){
+
+      $q.all(promises).then(
+        function successCallback(response){
+          console.log('all friends deleted');
+          success();
+        },
+        function errorCallback(response){
+          console.log('failed to delete all friends');
+          error();
+        }
+      );
+    }
+
+    var deferred = $q.defer();
+    var promise = deferred.promise;
+     
+    promise
+      .then(setupDeletePromises)
+      .then(resolveDeletePromises);
+     
+    deferred.resolve();
+
   };
 
   this.getDeletedFriends = function(success, error){
+
     var service = this;
-    if(service.deletedFriends.length !== 0){
-      service.deletedFriends.forEach(function(friend, index, list){
-        console.log('restoring ' + friend.name);
-        service.addFriend(friend.name, success, error);
-        list.splice(index, 1);
+
+    var setupRestorePromises = function(){
+      var promises = []
+
+      service.deletedFriends.forEach(function(friend, index){
+        promises.push(service.addFriend(friend.name, function(r){}, error));
       });
-    } else {
-      console.log('no deletedFriends to restore');
+
+      return promises
     }
+
+    var resolveRestorePromises = function(promises){
+      $q.all(promises).then(
+        function successCallback(response){
+          console.log('all friends restored');
+
+          service.deletedFriends.length = 0;
+
+          success();
+        },
+        function errorCallback(response){
+          console.log('failed to restore all friends');
+          error();
+        }
+      );
+    }
+
+    var deferred = $q.defer();
+    var promise = deferred.promise;
+     
+    promise
+      .then(setupRestorePromises)
+      .then(resolveRestorePromises);
+     
+    deferred.resolve();
   };
 
 }]);
