@@ -9,7 +9,7 @@ angular.module('myApp.viewFriends', ['ngRoute'])
   });
 }])
 
-.controller('ViewFriendsCtrl', ['$scope', 'NameService', 'SessionService', 'FriendService', function($scope, NameService, SessionService, FriendService) {
+.controller('ViewFriendsCtrl', ['$scope', 'SessionService', 'FriendService', function($scope, SessionService, FriendService) {
 
   // SessionService.kickOutIfNotLoggedIn();
 

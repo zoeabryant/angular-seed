@@ -3,8 +3,6 @@
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
   'ngRoute',
-  'myApp.view1',
-  'myApp.view2',
   'myApp.viewFriends',
   'myApp.viewLogin',
   'myApp.version'
@@ -23,14 +21,6 @@ angular.module('myApp', [
     }
   }
 }])
-
-.service('NameService', function(){
-  this.names = ['Julie', 'Jennifer', 'Janice'];
-
-  this.addName = function(name){
-    this.names.push(name);
-  };
-})
 
 .service('LoginService', ['$http', 'SessionService', function($http, SessionService){
   this.login = function(username, password, success, error){
