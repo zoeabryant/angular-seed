@@ -5,9 +5,12 @@
   <button type="submit">Add {{addFriendForm.name}} to your friends</button>
 </form>
 
+<u ng-click="deleteAllFriends()">Delete all friends</u>
+<u ng-click="getDeletedFriends()">Restore deleted friends</u>
+
 <ul ng-if="friends">
   <li ng-repeat="friend in friends">
     {{ friend.name }}
-    <u ng-click="deleteFriend(friend.id)">x</u>
+    <u ng-click="deleteFriend(friend)">x</u>
   </li>
 </ul>

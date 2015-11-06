@@ -32,7 +32,7 @@ angular.module('myApp', [
   };
 })
 
-.service('LoginService', ['$http', '$httpParamSerializerJQLike', 'SessionService', function($http, $httpParamSerializerJQLike, SessionService){
+.service('LoginService', ['$http', 'SessionService', function($http, SessionService){
   this.login = function(username, password, success, error){
 
     $http({
@@ -55,7 +55,7 @@ angular.module('myApp', [
   };
 }])
 
-.service('FriendService', ['$http', '$httpParamSerializerJQLike', function($http, $httpParamSerializerJQLike){
+.service('FriendService', ['$http', function($http){
 
   this.getFriends = function(success, error){
 
@@ -90,19 +90,43 @@ angular.module('myApp', [
 
   };
 
-  this.deleteFriend = function(id, success, error){
+  this.deletedFriends = [];
 
+  this.deleteFriend = function(friend, success, error){
+    var service = this;
     $http({
       method: 'DELETE',
-      url: 'http://localhost:8910/person/' + id
+      url: 'http://localhost:8910/person/' + friend.id
     }).then(function successCallback(response) {
       console.log('delete friend successful');
+      service.deletedFriends.push(friend);
       success(response);
     }, function errorCallback(response) {
       console.log('delete friend failed');
       error(response);
     });
 
+  };
+
+  this.deleteAllFriends = function(friends, success, error){
+    var service = this;
+    console.log('deleteAllFriends');
+    friends.forEach(function(friend){
+      service.deleteFriend(friend, success, error);
+    });
+  };
+
+  this.getDeletedFriends = function(success, error){
+    var service = this;
+    if(service.deletedFriends.length !== 0){
+      service.deletedFriends.forEach(function(friend, index, list){
+        console.log('restoring ' + friend.name);
+        service.addFriend(friend.name, success, error);
+        list.splice(index, 1);
+      });
+    } else {
+      console.log('no deletedFriends to restore');
+    }
   };
 
 }]);

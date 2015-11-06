@@ -11,7 +11,7 @@ angular.module('myApp.viewFriends', ['ngRoute'])
 
 .controller('ViewFriendsCtrl', ['$scope', 'NameService', 'SessionService', 'FriendService', function($scope, NameService, SessionService, FriendService) {
 
-  SessionService.kickOutIfNotLoggedIn();
+  // SessionService.kickOutIfNotLoggedIn();
 
   var loadData = function(){
     FriendService.getFriends(getFriendsSuccessCallback, genericErrorCallback);
@@ -29,8 +29,16 @@ angular.module('myApp.viewFriends', ['ngRoute'])
     FriendService.addFriend($scope.addFriendForm.name, loadData, genericErrorCallback);
   };
 
-  $scope.deleteFriend = function(id){
-    FriendService.deleteFriend(id, loadData, genericErrorCallback);
+  $scope.deleteFriend = function(friend){
+    FriendService.deleteFriend(friend, loadData, genericErrorCallback);
+  };
+
+  $scope.getDeletedFriends = function(){
+    FriendService.getDeletedFriends(loadData, genericErrorCallback);
+  };
+
+  $scope.deleteAllFriends = function(){
+    FriendService.deleteAllFriends($scope.friends, loadData, genericErrorCallback);
   };
 
   loadData();
