@@ -7,8 +7,10 @@ describe('myApp.viewLogin module', function() {
   describe('viewLogin controller', function(){
 
     it('should ....', inject(function($controller) {
-      //spec body
-      var viewLoginCtrl = $controller('ViewLoginCtrl');
+      var mockScope = {};
+      var mockLoginService = {};
+      var viewLoginCtrl = $controller('ViewLoginCtrl', 
+        {$scope: mockScope, LoginService: mockLoginService});
       expect(viewLoginCtrl).toBeDefined();
     }));
 

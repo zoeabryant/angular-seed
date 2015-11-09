@@ -18,6 +18,7 @@ angular.module('myApp.viewFriends', ['ngRoute'])
   }
 
   var getFriendsSuccessCallback = function(response) {
+    console.log('response in getFriendsSuccessCallback: ' + response)
     $scope.friends = response.data;
   }
 
