@@ -6,10 +6,12 @@ describe('myApp.viewFriends module', function() {
   var mockScope = {};
   var mockSessionService = {};
   var mockFriendService = {
-    getFriends: function(){
-      return {
-        data: ['Hannah', 'Amy']
-      }
+    getFriends: function(successCallback, errorCallback){
+      successCallback(
+        {
+          data:['Sarah', 'Amy']
+        }
+      )
     },
     addFriend: function(){},
     deletedFriends: [],
@@ -26,7 +28,7 @@ describe('myApp.viewFriends module', function() {
 
       inject(function($controller) {
 
-        spyOn(mockFriendService, 'getFriends').and.returnValue();
+        spyOn(mockFriendService, 'getFriends').and.callThrough();
         spyOn(mockFriendService, 'addFriend');
         spyOn(mockFriendService, 'deleteFriend');
         spyOn(mockFriendService, 'deleteAllFriends');
@@ -43,7 +45,7 @@ describe('myApp.viewFriends module', function() {
 
     });
 
-    it('should load friends on instanciation', function() {
+    it('should call get friends on instanciation', function() {
 
       expect(mockFriendService.getFriends).toHaveBeenCalled();
 
