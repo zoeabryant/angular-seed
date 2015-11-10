@@ -13,6 +13,7 @@ describe('myApp.viewLogin module', function() {
         {$scope: mockScope, LoginService: mockLoginService});
       expect(viewLoginCtrl).toBeDefined();
     }));
-
   });
+
+
 });
